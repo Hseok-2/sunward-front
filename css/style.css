@@ -1,0 +1,334 @@
+/* 기본 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+}
+body {
+  color: #333;
+  line-height: 1.6;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* 헤더 */
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.header-inner {
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.nav ul {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav a {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* 히어로 섹션 */
+.hero {
+  height: 800px;
+  /* 배경 이미지 연결 */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../images/hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+.hero h1 {
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.hero p {
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* 회사 소개 (About) + 화살표 추가 */
+.about {
+  padding: 120px 0;
+  display: flex;
+  justify-content: center;
+}
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+} /* 간격 조정 */
+
+.about-img {
+  width: 500px;
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.about-img video {
+  width: 100%;
+  auto: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.about-text {
+  width: 450px;
+}
+.about-text h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #111;
+}
+.about-text p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.btn-line {
+  padding: 12px 30px;
+  border: 1px solid #333;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-line:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* 제품 라인업 (Products) + 화살표 정렬 추가 */
+.products {
+  padding: 80px 0 120px;
+  text-align: center;
+}
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 60px;
+  color: #111;
+}
+
+/* 제품 화살표 정렬을 위한 래퍼 */
+.product-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+/* 기존 .product-grid 부분을 찾아 아래 내용으로 교체하거나 수정하세요 */
+.product-grid {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽부터 차례대로 정렬 */
+  gap: 24px; /* 카드 사이 간격 */
+
+  /* 카드가 많아지면 가로 스크롤 발생 (줄바꿈 방지) */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px; /* 스크롤 여유 공간 */
+
+  /* 스크롤바 숨기기 (깔끔하게) */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 크롬, 사파리, 오페라 등에서 스크롤바 숨기기 */
+.product-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* 카드가 찌그러지지 않도록 고정 */
+.product-card {
+  width: 280px;
+  text-align: left;
+
+  /* ★중요★: 공간이 부족해도 카드가 찌그러지지 않고 원래 크기(280px)를 유지함 */
+  flex-shrink: 0;
+}
+
+.product-card {
+  width: 280px;
+  text-align: left;
+}
+.product-img {
+  width: 100%;
+  height: 280px;
+  background: #eee;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 4px; /* 살짝 둥글게 (선택사항) */
+}
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+}
+.product-card:hover .product-img img {
+  transform: scale(1.05);
+}
+.product-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* [공통] 화살표 아이콘 스타일 */
+.arrow-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+.arrow-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* 통계 (Stats) - 아이콘 크기 수정 (100px) */
+.stats {
+  background: #f9f9f9;
+  padding: 100px 0;
+  border-top: 1px solid #eee;
+}
+.stats-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 0 100px;
+}
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 아이콘 크기 100px */
+.stat-icon-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+.stat-number {
+  font-size: 40px;
+  font-weight: 800;
+  color: #1a2b4c;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+.divider {
+  width: 1px;
+  height: 80px;
+  background: #ddd;
+}
+
+/* 문의 유도 (CTA) */
+.cta {
+  background: #1a2b4c;
+  padding: 80px 0;
+  text-align: center;
+  color: #fff;
+}
+.cta h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.cta p {
+  font-size: 18px;
+  opacity: 0.8;
+  margin-bottom: 40px;
+}
+.btn-orange {
+  background: #f2994a;
+  color: #fff;
+  border: none;
+  padding: 16px 48px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+.btn-orange:hover {
+  background: #e08e43;
+  transform: translateY(-2px);
+}
+
+/* 푸터 */
+.footer {
+  background: #222;
+  padding: 60px 0;
+  color: #888;
+  font-size: 14px;
+}
+.footer-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 24px;
+  display: block;
+}
+.footer-info p {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.copyright {
+  margin-top: 30px;
+
+  font-size: 13px;
+  opacity: 0.6;
+}
