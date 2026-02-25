@@ -393,12 +393,38 @@ header {
 
   /* 5. 통계 (Stats): 세로로 나열하고 구분선 숨기기 */
   .stats-grid {
-    flex-direction: column;
-    padding: 0;
-    gap: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 0 10px;
+    gap: 10px;
   }
+
+  .stat-item {
+    flex: 1; /* 새 아이템이 동일한 너비를 가짐 */
+  }
+
+  .stat-icon-img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
   .divider {
     display: none; /* 세로 배치이므로 세로선 숨김 */
+  }
+
+  .stat-number {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .divider {
+    display: none;
   }
 
   /* 6. 문의하기 (CTA) */
