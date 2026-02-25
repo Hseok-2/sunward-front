@@ -14,9 +14,11 @@ a {
   color: inherit;
 }
 .container {
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  padding: 0 20px;
 }
 
 /* 헤더 */
@@ -32,10 +34,12 @@ header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .header-inner {
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
 }
 .logo {
   font-size: 24px;
@@ -331,4 +335,78 @@ header {
 
   font-size: 13px;
   opacity: 0.6;
+}
+
+/* =========================================
+   📱 모바일 반응형 디자인 (768px 이하)
+   ========================================= */
+@media (max-width: 768px) {
+  /* 1. 헤더: 모바일에서는 메뉴 숨기기 (또는 햄버거 메뉴로 대체하지만 임시로 숨김) */
+  .nav {
+    display: none;
+  }
+
+  /* 2. 히어로 섹션: 글씨 크기 줄이고 높이 조절 */
+  .hero {
+    height: 600px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+  }
+  .hero p {
+    font-size: 16px;
+  }
+
+  /* 3. 회사 소개 (About): 가로 배치를 세로 배치로 변경 */
+  .about-content {
+    flex-direction: column; /* 세로로 쌓기 */
+    gap: 30px;
+  }
+  .about-img,
+  .about-text {
+    width: 100%; /* 너비를 꽉 채움 */
+  }
+  .about-text {
+    text-align: center; /* 모바일은 가운데 정렬이 예쁨 */
+  }
+  .about-text p {
+    font-size: 15px;
+  }
+  .about-content .arrow-icon {
+    transform: rotate(90deg); /* 화살표를 아래쪽으로 회전 */
+  }
+
+  /* 4. 제품 라인업: 양옆 화살표 숨기기 (모바일은 터치 스와이프로 넘김) */
+  .product-wrapper .arrow-icon {
+    display: none;
+  }
+  .product-wrapper {
+    padding: 0;
+  }
+  .product-card {
+    width: 240px; /* 모바일에서는 카드 크기 살짝 축소 */
+  }
+  .product-img {
+    height: 240px;
+  }
+
+  /* 5. 통계 (Stats): 세로로 나열하고 구분선 숨기기 */
+  .stats-grid {
+    flex-direction: column;
+    padding: 0;
+    gap: 40px;
+  }
+  .divider {
+    display: none; /* 세로 배치이므로 세로선 숨김 */
+  }
+
+  /* 6. 문의하기 (CTA) */
+  .cta h2 {
+    font-size: 24px;
+  }
+  .btn-orange {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
 }
