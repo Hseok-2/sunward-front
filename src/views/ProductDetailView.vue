@@ -84,7 +84,6 @@ const productDB = {
       { label: '규격', items: ['3.0mm(T) x 450mm x 450mm'] },
     ],
   },
-  // 🚩 [수정] '롤시트' -> 'roll-sheet'
   'roll-sheet': {
     title: '롤시트',
     subtitle: 'Premium Roll Sheet Floor',
@@ -93,6 +92,65 @@ const productDB = {
     specs: [
       { label: '용도', items: ['병원, 요양원, 유치원, 복도 등'] },
       { label: '특징', items: ['이음새 최소화로 우수한 위생성', '항균 및 항바이러스 특수 코팅'] },
+    ],
+  },
+  flooring: {
+    title: '마루',
+    subtitle: 'Eco-friendly Wood Flooring',
+    description: '자연스러운 나무 질감과 뛰어난 보행감을 자랑하는 친환경 마루입니다.',
+    image: '/images/flooring.png',
+    specs: [
+      { label: '용도', items: ['아파트, 주택 등 주거 공간', '고급 상업 시설 및 휴게 공간'] },
+      {
+        label: '특징',
+        items: ['자연 친화적 소재 사용', '탁월한 스크래치 및 찍힘 방지', '우수한 열 전도율'],
+      },
+      { label: '규격', items: ['7.5mm(T) x 95mm x 800mm'] },
+    ],
+  },
+  wallpaper: {
+    title: '벽지',
+    subtitle: 'Stylish & Safe Wallpaper',
+    description: '감각적인 디자인과 안전한 소재로 공간의 품격을 높여주는 실크/합지 벽지입니다.',
+    image: '/images/wallpaper.png',
+    specs: [
+      { label: '용도', items: ['거실, 침실 등 주거 공간', '호텔, 레스토랑 등 상업 공간 벽면'] },
+      {
+        label: '특징',
+        items: ['세련되고 다채로운 패턴', '우수한 항균 및 방염 성능', '오염에 강한 표면 코팅'],
+      },
+    ],
+  },
+  'interior-film': {
+    title: '인테리어 필름',
+    subtitle: 'High-Quality Interior Film',
+    description: '간편한 시공으로 가구와 몰딩의 분위기를 완벽하게 바꿔주는 고품질 필름입니다.',
+    image: '/images/interior-film.png',
+    specs: [
+      { label: '용도', items: ['도어, 샷시, 가구, 몰딩 등 표면 리폼', '상가 내부 아트월'] },
+      {
+        label: '특징',
+        items: ['리얼한 소재 질감 구현 (우드, 스톤, 메탈 등)', '강력한 점착력과 내구성'],
+      },
+      { label: '규격', items: ['1220mm(W) x 50m(L) / 1롤'] },
+    ],
+  },
+  'wall-panel': {
+    title: '벽장재',
+    subtitle: 'Decorative Wall Panel',
+    description: '입체적인 텍스처와 모던한 디자인으로 벽면을 고급스럽게 연출하는 벽장재입니다.',
+    image: '/images/wall-panel.png',
+    specs: [
+      { label: '용도', items: ['거실 아트월, 로비, 회의실, 엘리베이터 홀'] },
+      {
+        label: '특징',
+        items: [
+          '뛰어난 오염 방지 및 유지보수성',
+          '충격에 강한 고강도 소재',
+          '다양한 패턴 조합 가능',
+        ],
+      },
+      { label: '두께', items: ['6.0mm(T)'] },
     ],
   },
   // 필요한 제품들을 계속 추가할 수 있습니다.
