@@ -1,9 +1,11 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
 /* 기본 설정 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
 }
 body {
   color: #333;
@@ -63,9 +65,7 @@ header {
 .hero {
   height: 800px;
   /* 배경 이미지 연결 */
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../images/hero-bg.png");
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/hero-bg.png');
   background-size: cover;
   background-position: center;
   display: flex;
