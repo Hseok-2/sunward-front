@@ -1,7 +1,7 @@
 # 🏗️ SUNWARD (프론트엔드)
 
 SUNWARD(건축 자재 B2B 플랫폼) 웹사이트의 프론트엔드 리포지토리입니다. 
-Vite와 Vue 3 기반으로 빠르고 가볍게 구축되었으며, 모바일과 PC를 모두 지원하는 반응형 웹으로 제작되었습니다.
+<br>Vue 3 기반으로 모바일과 PC를 모두 지원하는 반응형 웹으로 제작되었습니다.
 
 ## 🛠 기술 스택 (Tech Stack)
 - **Framework:** Vue 3 (Composition API)
@@ -24,22 +24,36 @@ Vite와 Vue 3 기반으로 빠르고 가볍게 구축되었으며, 모바일과 
 ### 1. 패키지 설치 (Install Dependencies)
 ```sh
 npm install
+```
 
-2. 개발 서버 실행 (Compile and Hot-Reload for Development)
-Bash
+### 2. 개발 서버 실행 (Compile and Hot-Reload for Development)
+```sh
 npm run dev
+```
 
-💻 권장 개발 환경 (Recommended IDE Setup)
-에디터: VS Code
+### 3. 운영 환경 배포용 빌드 (Compile and Minify for Production)
+```sh
+npm run build
+```
 
-필수 확장 프로그램: Vue (Official)
-(주의: 기존에 Vetur를 사용 중이시라면 비활성화해 주세요.)
+### 4. 코드 린팅 (Lint with ESLint)
+```sh
+npm run lint
+```
 
-🌐 권장 브라우저 설정 (Recommended Browser Setup)
+---
+
+## 💻 개발 환경 (Recommended IDE Setup)
+
+- **에디터:** [VS Code](https://code.visualstudio.com/)
+- **필수 확장 프로그램:** [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 
+  *(주의: 기존에 Vetur를 사용 중이시라면 비활성화해 주세요.)*
+
+## 🌐 권장 브라우저 설정 (Recommended Browser Setup)
+
 원활한 디버깅을 위해 브라우저별 확장 프로그램을 설치하는 것을 권장합니다.
+- **Chrome / Edge / Brave:** [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 설치 및 [Custom Object Formatter 켜기](http://bit.ly/object-formatters)
+- **Firefox:** [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/) 설치 및 [Custom Object Formatter 켜기](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
-Chrome / Edge / Brave: Vue.js devtools 설치 및 Custom Object Formatter 켜기
-
-Firefox: Vue.js devtools 설치 및 Custom Object Formatter 켜기
-
-본 프로젝트는 향후 Spring Boot 및 MySQL 기반의 백엔드 API와 연동될 예정입니다.
+---
+*본 프로젝트는 향후 Spring Boot 및 MySQL 기반의 백엔드 API와 연동될 예정입니다.*
