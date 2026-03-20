@@ -8,9 +8,9 @@
           <p class="product-desc">{{ product.description }}</p>
 
           <div class="button-group">
-            <button class="btn btn-teal"><i class="icon-download"></i> 카탈로그</button>
-            <button class="btn btn-dark"><i class="icon-inquiry"></i> 제품문의</button>
-            <button class="btn btn-dark"><i class="icon-document"></i> 제품자료실</button>
+            <button class="btn btn-teal">카탈로그</button>
+            <button class="btn btn-dark">제품문의</button>
+            <button class="btn btn-dark">제품자료실</button>
           </div>
         </div>
 
@@ -22,21 +22,7 @@
       </div>
     </section>
 
-    <div class="tab-menu-wrapper">
-      <div class="tab-menu">
-        <RouterLink to="/product/deco-tile" class="tab-item">데코타일</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/product/roll-sheet" class="tab-item">롤시트</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/product/flooring" class="tab-item">마루</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/product/wallpaper" class="tab-item">벽지</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/product/interior-film" class="tab-item">인테리어 필름</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/product/wall-panel" class="tab-item">벽장재</RouterLink>
-      </div>
-    </div>
+    <FloatingTabMenu basePath="/product" />
 
     <section class="specs-section">
       <div class="container">
@@ -59,6 +45,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import FloatingTabMenu from '@/components/FloatingTabMenu.vue' // 컴포넌트 불러오기
 
 const route = useRoute()
 
@@ -153,7 +140,6 @@ const productDB = {
       { label: '두께', items: ['6.0mm(T)'] },
     ],
   },
-  // 필요한 제품들을 계속 추가할 수 있습니다.
 }
 
 // URL에 따라 데이터를 교체하는 함수
@@ -235,12 +221,14 @@ watch(
 
 .btn {
   padding: 12px 24px;
+  min-width: 120px;
   font-size: 15px;
   font-weight: bold;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: opacity 0.2s;
 }
@@ -339,54 +327,77 @@ watch(
   font-size: 20px;
 }
 
-/* 플로팅 탭 메뉴 스타일 */
-.tab-menu-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: -35px; /* 히어로 배너 위로 반쯤 걸치게 끌어올림 */
-  position: relative;
-  z-index: 10;
-}
+/* --- 모바일 반응형 처리 (768px 이하) --- */
+@media (max-width: 768px) {
+  /* 히어로 섹션 (상단 텍스트 + 이미지 영역) */
+  .hero-inner {
+    flex-direction: column; /* 가로 배열을 세로 배열로 변경 */
+    gap: 30px;
+    text-align: center; /* 모바일에서는 텍스트를 중앙 정렬하여 안정감 부여 */
+  }
 
-.tab-menu {
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 40px;
-  height: 70px;
-  border-radius: 35px; /* 둥근 캡슐 모양 */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
+  .text-box,
+  .image-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내부 요소들도 중앙 정렬 */
+  }
 
-.tab-item {
-  color: #555;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 10px 20px;
-  position: relative;
-  transition: color 0.3s;
-}
+  .product-title {
+    font-size: 36px; /* 모바일에 맞춰 제목 크기 축소 */
+  }
 
-.divider {
-  color: #ddd;
-  font-size: 14px;
-}
+  .product-subtitle {
+    font-size: 16px;
+  }
 
-/* 현재 선택된 탭 활성화 디자인 (Vue Router가 자동으로 적용) */
-.tab-item.router-link-active {
-  color: #38b2ac; /* 제품 페이지의 민트 포인트 컬러 */
-}
+  /* 버튼 그룹 설정 */
+  .button-group {
+    flex-wrap: wrap; /* 버튼이 길면 다음 줄로 넘어가도록 설정 */
+    justify-content: center;
+    width: 100%;
+  }
 
-/* 활성화 탭 아래 작은 삼각형 */
-.tab-item.router-link-active::after {
-  content: '';
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: #38b2ac transparent transparent transparent;
+  .btn {
+    flex: 1 1 calc(50% - 10px); /* 모바일에서는 버튼을 2개씩 나란히 배치 */
+    min-width: unset;
+  }
+
+  /* 제품 이미지 설정 */
+  .image-wrapper {
+    width: 100%; /* 화면 너비에 꽉 차게 변경 */
+    height: auto;
+    aspect-ratio: 4 / 3; /* 이미지 비율 유지 */
+  }
+
+  /* 제품 스펙 영역 */
+  .spec-row {
+    flex-direction: column; /* 제목과 내용을 세로로 배치 */
+    margin-bottom: 30px;
+  }
+
+  .spec-title-box {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .spec-title-box::before {
+    top: 50%;
+    transform: translateY(-50%);
+    left: -15px; /* 타이틀 바 위치를 글자 옆으로 변경 */
+    width: 4px;
+    height: 18px;
+  }
+
+  .spec-title {
+    font-size: 18px;
+    padding-left: 5px;
+  }
+
+  .spec-list {
+    flex-direction: column; /* 스펙 내용들도 세로로 나열 */
+    gap: 10px;
+  }
 }
 </style>

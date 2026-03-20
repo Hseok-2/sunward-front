@@ -7,7 +7,13 @@
 
       <div class="product-grid">
         <div class="product-track" :style="trackStyle">
-          <div v-for="product in products" :key="product.id" class="product-card">
+          <div
+            v-for="product in products"
+            :key="product.id"
+            class="product-card"
+            @click="goToProductList(product.routePath)"
+            style="cursor: pointer"
+          >
             <div class="product-img">
               <img :src="product.image" :alt="product.name" />
             </div>
@@ -23,14 +29,24 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router' // 라우터 추가
 
+const router = useRouter() // 라우터 사용 준비
+
+// 각 데이터에 이동할 경로 추가
 const products = ref([
-  { id: 1, name: '데코타일', image: '/images/product1.png' },
-  { id: 2, name: '마루', image: '/images/product2.png' },
-  { id: 3, name: '벽지', image: '/images/product3.png' },
-  { id: 4, name: '롤시트', image: '/images/product4.png' },
-  { id: 5, name: '인테리어 필름', image: '/images/interior_film.png' },
+  { id: 1, name: '데코타일', image: '/images/product1.png', routePath: 'deco-tile' },
+  { id: 2, name: '롤시트', image: '/images/product4.png', routePath: 'roll-sheet' },
+  { id: 3, name: '마루', image: '/images/product2.png', routePath: 'flooring' },
+  { id: 4, name: '벽지', image: '/images/product3.png', routePath: 'wallpaper' },
+  { id: 5, name: '인테리어 필름', image: '/images/interior_film.png', routePath: 'interior-film' },
+  { id: 6, name: '벽장재', image: '/images/wall-panel.png', routePath: 'wall-panel' },
 ])
+
+// 카드 클릭 시 리스트 페이지로 이동하는 함수
+const goToProductList = (routePath) => {
+  router.push(`/product-list/${routePath}`)
+}
 
 // 슬라이더 애니메이션 상태 관리
 const trackStyle = ref({ transform: 'translateX(0px)', transition: 'none' })

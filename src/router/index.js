@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about/:section',
+      path: '/about/:section', // 회사 소개 페이지
       name: 'about',
       component: () => import('../views/AboutView.vue'),
     },
@@ -19,7 +19,7 @@ const router = createRouter({
       redirect: '/about/overview',
     },
     {
-      path: '/product/:category', // 2. 제품 소개 페이지
+      path: '/product/:category', //  제품 소개 페이지
       name: 'product-detail',
       component: () => import('../views/ProductDetailView.vue'),
     },
@@ -28,14 +28,19 @@ const router = createRouter({
       redirect: '/product/deco-tile',
     },
     {
-      path: '/inquiry', // 3. 온라인 문의 페이지
+      path: '/inquiry', // 온라인 문의 페이지
       name: 'inquiry',
       component: () => import('../views/InquiryView.vue'),
     },
     {
-      path: '/support', // 4. 고객 지원 페이지
+      path: '/support', // 고객 지원 페이지
       name: 'support',
       component: () => import('../views/SupportView.vue'),
+    },
+    {
+      path: '/product-list/:category',
+      name: 'productList',
+      component: () => import('../views/ProductListView.vue'),
     },
   ],
 

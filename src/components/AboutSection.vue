@@ -13,18 +13,28 @@
           Sunward는 단순한 자재 공급을 넘어 현장의 완공까지 함께하는 든든한 파트너입니다. 최고의
           품질, 합리적인 가격으로 귀하의 현장을 지원합니다.
         </p>
-        <button class="btn-line">자세히 보기</button>
+        <button class="btn-line" @click="goToAbout">자세히 보기</button>
       </div>
-      <img src="/images/arrow-right.png" class="arrow-icon" alt="더보기" />
+      <img src="/images/arrow-right.png" class="arrow-icon" alt="더보기" @click="goToAbout" />
     </div>
   </section>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 // 비디오 음소거 토글
 const toggleMute = (event) => {
   const video = event.target
   video.muted = !video.muted
+}
+
+// 회사 개요 페이지로 이동하는 함수
+const goToAbout = () => {
+  router.push('/about/overview')
+  window.scrollTo({ top: 0, behavior: 'smooth' }) // 이동 후 스크롤을 맨 위로 올려줍니다.
 }
 </script>
 

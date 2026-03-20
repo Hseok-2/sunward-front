@@ -51,11 +51,13 @@ const goToInquiry = () => {
 }
 
 /* 모바일 반응형 디자인 (768px 이하) */
-.cta h2 {
-  font-size: 24px;
-}
-.btn-orange {
-  padding: 14px 32px;
-  font-size: 16px;
+@media (max-width: 768px) {
+  .cta h2 {
+    font-size: 24px;
+  }
+  .btn-orange {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
 }
 </style>
