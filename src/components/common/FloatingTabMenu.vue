@@ -1,17 +1,12 @@
 <template>
   <div class="tab-menu-wrapper">
     <div class="tab-menu">
-      <RouterLink :to="`${basePath}/deco-tile`" class="tab-item">데코타일</RouterLink>
-      <span class="divider">|</span>
-      <RouterLink :to="`${basePath}/roll-sheet`" class="tab-item">롤시트</RouterLink>
-      <span class="divider">|</span>
-      <RouterLink :to="`${basePath}/flooring`" class="tab-item">마루</RouterLink>
-      <span class="divider">|</span>
-      <RouterLink :to="`${basePath}/wallpaper`" class="tab-item">벽지</RouterLink>
-      <span class="divider">|</span>
-      <RouterLink :to="`${basePath}/interior-film`" class="tab-item">인테리어 필름</RouterLink>
-      <span class="divider">|</span>
-      <RouterLink :to="`${basePath}/wall-panel`" class="tab-item">벽장재</RouterLink>
+      <template v-for="(category, index) in categories" :key="category.slug">
+        <RouterLink :to="`${basePath}/${category.slug}`" class="tab-item">
+          {{ category.name }}
+        </RouterLink>
+        <span v-if="index < categories.length - 1" class="divider">|</span>
+      </template>
     </div>
   </div>
 </template>
@@ -24,6 +19,10 @@ import { RouterLink } from 'vue-router'
 defineProps({
   basePath: {
     type: String,
+    required: true,
+  },
+  categories: {
+    type: Array,
     required: true,
   },
 })

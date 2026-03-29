@@ -1,6 +1,6 @@
 <template>
   <section class="hero">
-    <h1>건설의 기초를 짓다, SUNWARD</h1>
+    <h1>병원 자재 전문 회사, SUNWARD</h1>
     <p>최고의 품질, 합리적인 가격으로 귀하의 현장을 지원합니다.</p>
   </section>
 </template>
@@ -10,7 +10,8 @@
 .hero {
   height: 800px;
   /* 배경 이미지 연결 */
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/hero-bg.png');
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/new-hero-bg.png');
   background-size: cover;
   background-position: center;
   display: flex;

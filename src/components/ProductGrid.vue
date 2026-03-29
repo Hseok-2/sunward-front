@@ -11,7 +11,7 @@
             v-for="product in products"
             :key="product.id"
             class="product-card"
-            @click="goToProductList(product.routePath)"
+            @click="goToProductList(product.slug)"
             style="cursor: pointer"
           >
             <div class="product-img">
@@ -29,33 +29,32 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router' // 라우터 추가
+import { useRouter } from 'vue-router'
 
-const router = useRouter() // 라우터 사용 준비
+const router = useRouter()
 
-// 각 데이터에 이동할 경로 추가
+// 🚩 카테고리 슬러그(slug) 매칭 완료
 const products = ref([
-  { id: 1, name: '데코타일', image: '/images/product1.png', routePath: 'deco-tile' },
-  { id: 2, name: '롤시트', image: '/images/product4.png', routePath: 'roll-sheet' },
-  { id: 3, name: '마루', image: '/images/product2.png', routePath: 'flooring' },
-  { id: 4, name: '벽지', image: '/images/product3.png', routePath: 'wallpaper' },
-  { id: 5, name: '인테리어 필름', image: '/images/interior_film.png', routePath: 'interior-film' },
-  { id: 6, name: '벽장재', image: '/images/wall-panel.png', routePath: 'wall-panel' },
+  { id: 1, name: '바닥재(타일)', image: '/images/deco-tile.png', slug: 'flooring-tile' },
+  { id: 2, name: '바닥재(시트)', image: '/images/roll-sheet.png', slug: 'flooring-sheet' },
+  { id: 3, name: '바닥재(마루)', image: '/images/flooring.png', slug: 'flooring-wood' },
+  { id: 4, name: '벽지&벽장재', image: '/images/wallpaper.png', slug: 'wallpaper-wallpanel' },
+  { id: 5, name: '단열재', image: '/images/wall-panel.png', slug: 'insulation' },
 ])
 
-// 카드 클릭 시 리스트 페이지로 이동하는 함수
-const goToProductList = (routePath) => {
-  router.push(`/product-list/${routePath}`)
+// ProductListView.vue 의 해당 카테고리로 부드럽게 이동!
+const goToProductList = (slug) => {
+  router.push(`/product-list/${slug}`)
 }
 
-// 슬라이더 애니메이션 상태 관리
+// 슬라이더 애니메이션 상태 관리 (기존 로직 완벽 유지)
 const trackStyle = ref({ transform: 'translateX(0px)', transition: 'none' })
 let isAnimating = false // 애니메이션 도중 중복 클릭 방지
 
 // 카드 너비(280px) + 간격(24px) = 한 번에 이동할 거리
 const moveDistance = 304
 
-// 다음 버튼
+// 다음 버튼 로직
 const nextProduct = () => {
   if (isAnimating) return
   isAnimating = true
@@ -77,7 +76,7 @@ const nextProduct = () => {
   }, 400)
 }
 
-//
+// 이전 버튼 로직
 const prevProduct = () => {
   if (isAnimating) return
   isAnimating = true
@@ -106,6 +105,7 @@ const prevProduct = () => {
 </script>
 
 <style scoped>
+/* 기존 스타일 완벽히 유지 */
 .products {
   padding: 80px 0 120px;
   text-align: center;
@@ -127,7 +127,6 @@ const prevProduct = () => {
   margin: 0 auto;
 }
 
-/* 넘치는 건 잘라내기만 함 */
 .product-grid {
   width: 1192px;
   max-width: 100%;
@@ -135,20 +134,23 @@ const prevProduct = () => {
   padding-bottom: 10px;
 }
 
-/* 실제 아이템들이 나열되고, 이 통째가 좌우로 움직임 */
 .product-track {
   display: flex;
   justify-content: flex-start;
   gap: 24px;
-  width: max-content; /* 아이템이 몇 개든 가로로 쭉 늘어서게 함 */
-  /* 자바스크립트가 인라인 스타일로 움직임을 제어합니다 */
+  width: max-content;
 }
 
-/* 개별 제품 카드 */
 .product-card {
   width: 280px;
   text-align: left;
   flex-shrink: 0;
+  transition: opacity 0.3s;
+}
+
+/* 외부 링크임을 살짝 암시하는 hover 효과 추가 */
+.product-card:hover {
+  opacity: 0.9;
 }
 
 .product-img {
@@ -177,7 +179,6 @@ const prevProduct = () => {
   color: #111;
 }
 
-/* 화살표 아이콘 */
 .arrow-icon {
   width: 40px;
   height: 40px;
@@ -195,7 +196,6 @@ const prevProduct = () => {
   transform: scale(1.1);
 }
 
-/* 모바일 화면 대응 */
 @media (max-width: 768px) {
   .product-wrapper {
     gap: 10px;

@@ -2,20 +2,12 @@
   <div class="inquiry-view">
     <section class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-title">Online Inquiry</h1>
-        <p class="hero-subtitle">온라인문의</p>
+        <h1 class="hero-title">Request a Quote</h1>
+        <p class="hero-subtitle">견적 문의</p>
       </div>
     </section>
 
-    <div class="tab-menu-wrapper">
-      <div class="tab-menu">
-        <RouterLink to="/support" class="tab-item">공지사항</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/inquiry" class="tab-item active">문의하기</RouterLink>
-      </div>
-    </div>
-
-    <section class="form-section" style="padding-top: 60px">
+    <section class="form-section">
       <div class="container">
         <form @submit.prevent="submitInquiry" class="inquiry-form">
           <div class="form-table">
@@ -108,12 +100,12 @@
             <h3 class="privacy-title">개인정보 수집·이용에 대한 동의</h3>
             <div class="privacy-box">
               <p>■ 수집하는 개인정보 항목</p>
-              <p>회사는 온라인문의를 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
+              <p>회사는 견적 문의를 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
               <p>◇ 수집항목 : 이름, 연락처, 이메일, 제목, 내용</p>
               <br />
               <p>■ 개인정보의 수집 및 이용목적</p>
               <p>회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.</p>
-              <p>- 온라인 문의에 대한 원활한 상담 및 답변 제공</p>
+              <p>- 견적 문의에 대한 원활한 상담 및 답변 제공</p>
             </div>
             <div class="privacy-agree">
               <label class="checkbox-label">
@@ -124,7 +116,7 @@
           </div>
 
           <div class="submit-area">
-            <button type="submit" class="btn-submit">확인</button>
+            <button type="submit" class="btn-submit">문의 접수하기</button>
           </div>
         </form>
       </div>
@@ -170,11 +162,10 @@ const submitInquiry = () => {
     return
   }
 
-  // 모든 검사를 통과했을 때 실제 제출 로직
+  // 🚩 [추후 백엔드 작업] 7번 요구사항: 관리자 이메일 발송 API 연동 시 이 부분에 axios 코드가 들어갑니다.
   console.log('제출된 폼 데이터:', form)
-  alert('문의가 정상적으로 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.')
+  alert('견적 문의가 정상적으로 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.')
 
-  // 성공 후 폼 초기화 및 캡차 새로고침
   Object.keys(form).forEach((key) => (form[key] = ''))
   form.agree = false
   refreshCaptcha()
@@ -198,7 +189,8 @@ const submitInquiry = () => {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 80px;
+  /* 탭 메뉴가 사라졌으므로 패딩을 줄여서 타이틀을 중앙으로 맞춤 */
+  padding-top: 0;
 }
 
 .hero-title {
@@ -212,57 +204,7 @@ const submitInquiry = () => {
   font-size: 18px;
 }
 
-/* 플로팅 탭 메뉴*/
-.tab-menu-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: -35px; /* 배너 위로 반쯤 걸치게 끌어올림 */
-  position: relative;
-  z-index: 10;
-}
-
-.tab-menu {
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 50px;
-  height: 70px;
-  border-radius: 35px; /* 둥근 캡슐 모양 */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 부드러운 그림자 */
-}
-
-.tab-item {
-  color: #555;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 10px 30px;
-  position: relative;
-  transition: color 0.3s;
-}
-
-.divider {
-  color: #ddd;
-  font-size: 14px;
-}
-
-/* 활성화된 탭 스타일 (초록색) */
-.tab-item.active,
-.tab-item.router-link-exact-active {
-  color: #2ea043; /* 제출 버튼과 통일된 초록색 */
-}
-
-.tab-item.active::after,
-.tab-item.router-link-exact-active::after {
-  content: '';
-  position: absolute;
-  bottom: -15px; /* 탭 메뉴 박스 아래로 삐져나오는 삼각형 */
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: #2ea043 transparent transparent transparent;
-}
+/* 🟡 [삭제됨] 플로팅 탭 메뉴 CSS 전체 삭제 완료 */
 
 /* 문의 폼 영역 */
 .form-section {

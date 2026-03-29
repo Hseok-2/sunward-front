@@ -19,16 +19,11 @@ const router = createRouter({
       redirect: '/about/overview',
     },
     {
-      path: '/product/:category', //  제품 소개 페이지
-      name: 'product-detail',
-      component: () => import('../views/ProductDetailView.vue'),
-    },
-    {
       path: '/product',
-      redirect: '/product/deco-tile',
+      redirect: '/product-list/flooring-tile',
     },
     {
-      path: '/inquiry', // 온라인 문의 페이지
+      path: '/inquiry', // 견적 문의 페이지
       name: 'inquiry',
       component: () => import('../views/InquiryView.vue'),
     },

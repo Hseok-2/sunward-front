@@ -3,7 +3,7 @@
     <HeroSection />
     <AboutSection />
     <ProductGrid />
-    <StateSection />
+    <!-- <StateSection /> -->
     <CtaSection />
   </main>
 </template>
@@ -13,6 +13,6 @@
 import HeroSection from '@/components/HeroSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
 import ProductGrid from '@/components/ProductGrid.vue'
-import StateSection from '@/components/StateSection.vue'
+// import StateSection from '@/components/StateSection.vue'
 import CtaSection from '@/components/CtaSection.vue'
 </script>

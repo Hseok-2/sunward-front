@@ -1,13 +1,20 @@
 <template>
   <div class="product-list-view">
     <section class="page-header">
-      <div class="container">
-        <h1 class="page-title">{{ categoryTitle }}</h1>
-        <p class="page-subtitle">SUNWARD의 고품질 {{ categoryTitle }} 라인업을 확인해 보세요.</p>
+      <div class="container hero-container">
+        <div class="hero-text">
+          <h1 class="page-title">{{ currentCategory.name }}</h1>
+          <p class="category-subtitle">{{ currentCategory.subTitle }}</p>
+          <p class="page-desc">{{ currentCategory.description }}</p>
+        </div>
+
+        <div class="hero-image">
+          <img :src="currentCategory.coverImage" :alt="currentCategory.name" class="cover-img" />
+        </div>
       </div>
     </section>
 
-    <FloatingTabMenu basePath="/product-list" />
+    <FloatingTabMenu basePath="/product-list" :categories="mockCategories" />
 
     <section class="list-section">
       <div class="container">
@@ -24,7 +31,13 @@
         </div>
 
         <div v-if="paginatedProducts.length > 0" class="item-grid">
-          <div v-for="item in paginatedProducts" :key="item.id" class="item-card">
+          <div
+            v-for="item in paginatedProducts"
+            :key="item.id"
+            class="item-card"
+            @click="openPortfolio(item.link)"
+            style="cursor: pointer"
+          >
             <div class="item-img-box">
               <img :src="item.image" :alt="item.name" />
             </div>
@@ -47,7 +60,6 @@
           >
             &lt;
           </button>
-
           <button
             v-for="page in totalPages"
             :key="page"
@@ -57,7 +69,6 @@
           >
             {{ page }}
           </button>
-
           <button
             class="page-btn"
             :disabled="currentPage === totalPages"
@@ -74,132 +85,156 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import FloatingTabMenu from '@/components/FloatingTabMenu.vue' // 🚩 [추가] 컴포넌트 불러오기
+import FloatingTabMenu from '@/components/common/FloatingTabMenu.vue'
 
 const route = useRoute()
 
-// 카테고리별 한글 이름 매핑
-const categoryNames = {
-  'deco-tile': '데코타일',
-  'roll-sheet': '롤시트',
-  flooring: '마루',
-  wallpaper: '벽지',
-  'interior-film': '인테리어 필름',
-  'wall-panel': '벽장재',
+// 5개 카테고리 체계 및 커버 이미지 추가
+const mockCategories = ref([
+  {
+    categoryId: 1,
+    name: '바닥재(타일)',
+    slug: 'flooring-tile',
+    subTitle: 'High-Performance Commercial Tile',
+    description: 'SUNWARD 타일은 우수한 내마모성과 다양한 디자인 패턴을 갖춘 바닥재입니다.',
+    coverImage: '/images/deco-tile.png', // 시안의 우측 이미지 역할
+  },
+  {
+    categoryId: 2,
+    name: '바닥재(시트)',
+    slug: 'flooring-sheet',
+    subTitle: 'Durable & Easy-care Sheet',
+    description: '시공이 편리하고 유지관리가 쉬운 롤시트 바닥재입니다.',
+    coverImage: '/images/roll-sheet.png',
+  },
+  {
+    categoryId: 3,
+    name: '바닥재(마루)',
+    slug: 'flooring-wood',
+    subTitle: 'Premium Wood Flooring',
+    description: '자연스러운 질감과 따뜻한 감성을 담은 프리미엄 마루입니다.',
+    coverImage: '/images/flooring.png',
+  },
+  {
+    categoryId: 4,
+    name: '벽지&벽장재',
+    slug: 'wallpaper-wallpanel',
+    subTitle: 'Stylish Wall Coverings',
+    description: '공간의 분위기를 완성하는 감각적인 벽지와 벽장재입니다.',
+    coverImage: '/images/wallpaper.png',
+  },
+  {
+    categoryId: 5,
+    name: '단열재',
+    slug: 'insulation',
+    subTitle: 'High-Efficiency Insulation',
+    description: '우수한 단열 성능으로 에너지 효율을 높여주는 단열재입니다.',
+    coverImage: '/images/wall-panel.png',
+  },
+])
+
+const currentCategory = ref({})
+
+// 외부 포트폴리오 링크를 새 창으로 여는 함수입니다.
+const openPortfolio = (url) => {
+  if (url) {
+    window.open(url, '_blank')
+  } else {
+    alert('해당 제품의 포트폴리오 링크가 아직 등록되지 않았습니다.')
+  }
 }
 
-const categoryTitle = ref('')
-
-// 가상의 전체 제품 데이터베이스 (페이징 테스트를 위해 데코타일을 많이 넣었습니다)
+// 제품 Mock Data (Key값 최신화)
 const allProductsDB = {
-  'deco-tile': [
+  'flooring-tile': [
     {
       id: 101,
       name: 'LVT 베이직 3T (보타닉)',
       desc: '자연스러운 우드 패턴의 기본형 데코타일',
       image: '/images/deco-1.jpg',
+      link: 'https://www.b2bzincatalog.com/digital/samplebook/botanic/',
     },
     {
       id: 102,
       name: 'LVT 스탠다드 3T (에코노플러스)',
       desc: '뛰어난 내구성의 상업용 데코타일',
       image: '/images/deco-2.jpg',
+      link: 'https://www.b2bzincatalog.com/digital/samplebook/econo/',
     },
     {
       id: 103,
       name: 'LVT 프리미엄 5T (프레스티지)',
       desc: '고급스러운 질감의 프리미엄 데코타일',
       image: '/images/deco-3.jpg',
+      link: '', // 링크가 없는 경우 비워두면 클릭 시 alert 창이 뜹니다.
     },
     {
       id: 104,
       name: 'VCT 베이직 (디럭스)',
       desc: '가성비가 뛰어난 범용 타일',
       image: '/images/deco-4.jpg',
+      link: '',
     },
     {
       id: 105,
       name: 'LVT 우드 우븐',
       desc: '직조 느낌을 살린 독특한 패턴',
       image: '/images/deco-1.jpg',
+      link: '',
     },
     {
       id: 106,
       name: 'LVT 스톤 마블',
       desc: '천연 대리석의 웅장함을 담은 타일',
       image: '/images/deco-2.jpg',
+      link: '',
     },
     {
       id: 107,
       name: 'LVT 콘크리트 다크',
       desc: '모던한 인더스트리얼 감성',
       image: '/images/deco-3.jpg',
+      link: '',
     },
   ],
-  'roll-sheet': [
-    {
-      id: 201,
-      name: '항균 롤시트 2.0T',
-      desc: '병원 및 요양시설용 위생 바닥재',
-      image: '/images/roll-1.jpg',
-    },
-  ],
-  // ... 다른 카테고리 데이터들 ...
+  // ... 나머지 카테고리 데이터 동일
 }
 
-// 현재 카테고리의 전체 제품 리스트
 const currentCategoryProducts = ref([])
-
-// 사용자가 입력한 검색어
 const searchQuery = ref('')
-
-// 페이징 관련 상태 변수
 const currentPage = ref(1)
-const itemsPerPage = 6 // 한 페이지에 보여줄 제품 개수
+const itemsPerPage = 6
 
-// 데이터 불러오기 함수
 const loadCategoryData = () => {
-  const category = route.params.category
-  categoryTitle.value = categoryNames[category] || '제품 리스트'
-  currentCategoryProducts.value = allProductsDB[category] || []
-  currentPage.value = 1 // 카테고리가 바뀌면 1페이지로 리셋
-  searchQuery.value = '' // 카테고리가 바뀌면 검색어도 초기화
+  const categorySlug = route.params.category
+  const foundCategory = mockCategories.value.find((c) => c.slug === categorySlug)
+  currentCategory.value = foundCategory || mockCategories.value[0]
+  currentCategoryProducts.value = allProductsDB[currentCategory.value.slug] || []
+  currentPage.value = 1
+  searchQuery.value = ''
 }
 
-// 1단계: 전체 데이터에서 검색어(이름 또는 설명)가 포함된 것만 추려냄
 const filteredProducts = computed(() => {
   if (!searchQuery.value) return currentCategoryProducts.value
-
   const query = searchQuery.value.toLowerCase()
   return currentCategoryProducts.value.filter(
     (item) => item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query),
   )
 })
 
-// 2단계: '필터링된 결과'를 기준으로 총 페이지 수 계산
-const totalPages = computed(() => {
-  return Math.ceil(filteredProducts.value.length / itemsPerPage)
-})
+const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))
 
-// 3단계: '필터링된 결과'를 기준으로 현재 페이지에 보일 6개만 잘라냄
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
-  const end = start + itemsPerPage
-  return filteredProducts.value.slice(start, end)
+  return filteredProducts.value.slice(start, start + itemsPerPage)
 })
 
-// 검색어를 입력할 때마다 무조건 1페이지로 돌아가게 만듦
-watch(searchQuery, () => {
-  currentPage.value = 1
-})
-
-// 페이지 변경 함수
 const changePage = (pageNumber) => {
   currentPage.value = pageNumber
-  window.scrollTo({ top: 0, behavior: 'smooth' }) // 페이지 넘기면 스크롤 위로
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-// 라이프사이클 및 라우터 감지
+watch(searchQuery, () => (currentPage.value = 1))
 onMounted(loadCategoryData)
 watch(() => route.params.category, loadCategoryData)
 </script>
@@ -211,154 +246,81 @@ watch(() => route.params.category, loadCategoryData)
   padding: 0 20px;
 }
 
-/* 1. 상단 타이틀 영역 */
+/* 1. 상단 타이틀 영역 (시안 기반 2컬럼 레이아웃) */
 .page-header {
-  background-color: #f8f9fa;
-  padding: 60px 0;
-  text-align: center;
-  border-bottom: 1px solid #eaeaea;
+  background-color: #fcfcfc;
+  padding: 100px 0 120px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.hero-text {
+  flex: 1;
+  text-align: left;
+}
+
+.category-subtitle {
+  font-size: 26px;
+  color: #666;
+  font-weight: 400;
+  margin-bottom: 20px;
 }
 
 .page-title {
-  font-size: 36px;
+  font-size: 52px;
   font-weight: 800;
   color: #111;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  line-height: 1.2;
 }
 
-.page-subtitle {
-  font-size: 18px;
+.page-desc {
+  font-size: 17px;
   color: #666;
-}
-
-/* 2. 제품 리스트 그리드 */
-.list-section {
-  padding: 80px 0;
-}
-
-/* CSS Grid를 사용하여 모바일 반응형 대응 */
-.item-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* PC에서는 3열 */
-  gap: 30px;
-}
-
-.item-card {
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  overflow: hidden;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-  cursor: pointer;
-  background-color: #fff;
-}
-
-.item-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-}
-
-.item-img-box {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background-color: #f0f0f0;
-  overflow: hidden;
-}
-
-.item-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.item-card:hover .item-img-box img {
-  transform: scale(1.05);
-}
-
-.item-info {
-  padding: 25px 20px;
-}
-
-.item-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 10px;
-}
-
-.item-desc {
-  font-size: 15px;
-  color: #777;
-  line-height: 1.5;
+  line-height: 1.6;
   word-break: keep-all;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 100px 0;
-  font-size: 18px;
-  color: #999;
-}
-
-/* 3. 페이징 영역 */
-.pagination {
+/* 우측 이미지 스타일 */
+.hero-image {
+  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 60px;
+  justify-content: flex-end;
 }
 
-.page-btn {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  color: #555;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: 0.2s;
+.cover-img {
+  width: 100%;
+  max-width: 550px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.page-btn:hover:not(:disabled) {
-  background-color: #f8f9fa;
-  border-color: #999;
+/* 2. 리스트 섹션 (기존 로직 유지) */
+.list-section {
+  padding: 80px 0;
 }
-
-.page-btn.active {
-  background-color: #38b2ac;
-  color: #fff;
-  border-color: #38b2ac;
-  font-weight: bold;
-}
-
-.page-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* 검색창 디자인 */
 .search-wrap {
   display: flex;
-  justify-content: flex-end; /* 우측 정렬 */
+  justify-content: flex-end;
   margin-bottom: 40px;
 }
-
 .search-box {
   display: flex;
   width: 100%;
-  max-width: 400px; /* 검색창 최대 너비 */
-  border: 2px solid #38b2ac; /* 민트색 테두리 */
+  max-width: 400px;
+  border: 2px solid #38b2ac;
   border-radius: 30px;
   overflow: hidden;
+  background: #fff;
 }
-
 .search-input {
   flex: 1;
   padding: 12px 20px;
@@ -366,48 +328,100 @@ watch(() => route.params.category, loadCategoryData)
   outline: none;
   font-size: 15px;
 }
-
 .search-btn {
   background-color: #38b2ac;
   color: #fff;
   border: none;
   padding: 0 25px;
-  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-.search-btn:hover {
-  background-color: #2e948f;
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.item-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: 0.3s;
+}
+.item-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+.item-img-box {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #f5f5f5;
+}
+.item-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.item-info {
+  padding: 25px 20px;
+}
+.item-name {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.item-desc {
+  font-size: 14px;
+  color: #777;
 }
 
-/* 모바일 반응형 처리 */
-@media (max-width: 768px) {
-  .page-header {
-    padding: 40px 0;
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 60px;
+}
+.page-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.page-btn.active {
+  background: #38b2ac;
+  color: #fff;
+  border-color: #38b2ac;
+}
+
+/* 모바일 대응 */
+@media (max-width: 992px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-text {
+    text-align: center;
+    order: 2;
+  }
+  .hero-image {
+    order: 1;
+    width: 100%;
+    justify-content: center;
   }
   .page-title {
-    font-size: 28px;
-  }
-  .page-subtitle {
-    font-size: 15px;
+    font-size: 36px;
   }
   .item-grid {
-    grid-template-columns: repeat(1, 1fr); /* 모바일에서는 무조건 1열 (가로 꽉 차게) */
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .item-info {
-    padding: 20px 15px;
-  }
-  .item-name {
-    font-size: 18px;
-  }
-  .search-wrap {
-    justify-content: center; /* 모바일에서는 검색창을 가운데로 */
-  }
-  .search-box {
-    max-width: 100%; /* 화면 꽉 차게 */
+}
+
+@media (max-width: 600px) {
+  .item-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

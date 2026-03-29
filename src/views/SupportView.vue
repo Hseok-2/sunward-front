@@ -7,14 +7,6 @@
       </div>
     </section>
 
-    <div class="tab-menu-wrapper">
-      <div class="tab-menu">
-        <RouterLink to="/support" class="tab-item active">공지사항</RouterLink>
-        <span class="divider">|</span>
-        <RouterLink to="/inquiry" class="tab-item">문의하기</RouterLink>
-      </div>
-    </div>
-
     <section class="content-section">
       <div class="container">
         <h2 class="page-title">공지사항</h2>
@@ -69,7 +61,7 @@
 <script setup>
 import { ref } from 'vue'
 
-// 가상의 공지사항 데이터 (나중에 백엔드와 연결 시 교체)
+// 가상의 공지사항 데이터 (나중에 백엔드 API 연결 시 axios 등으로 데이터 통신)
 const notices = ref([
   {
     id: '공지',
@@ -119,7 +111,8 @@ const notices = ref([
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 80px; /* 헤더 높이만큼 띄움 */
+  /* 🟡 [수정] 탭 메뉴가 빠졌으므로 타이틀이 정중앙에 오도록 상단 여백 제거 */
+  padding-top: 0;
 }
 
 .hero-title {
@@ -134,55 +127,7 @@ const notices = ref([
   font-size: 18px;
 }
 
-/* 플로팅 탭 메뉴 */
-.tab-menu-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: -35px; /* 위로 끌어올려서 배너에 걸치게 함 */
-  position: relative;
-  z-index: 10;
-}
-
-.tab-menu {
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 50px;
-  height: 70px;
-  border-radius: 35px; /* 둥근 캡슐 모양 */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.tab-item {
-  color: #555;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 10px 30px;
-  position: relative;
-  transition: color 0.3s;
-}
-
-.divider {
-  color: #ddd;
-  font-size: 14px;
-}
-
-/* 활성화된 탭 스타일 (초록색) */
-.tab-item.active {
-  color: #2ea043; /* 이미지와 비슷한 초록색 포인트 */
-}
-
-.tab-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: -15px; /* 탭 메뉴 박스 아래로 삐져나오는 삼각형 */
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: #2ea043 transparent transparent transparent;
-}
+/* 🟡 [삭제됨] 플로팅 탭 메뉴 CSS 전체 삭제 완료 */
 
 /* 본문 및 게시판 */
 .content-section {
@@ -200,7 +145,7 @@ const notices = ref([
 /* 테이블 스타일 */
 .board-table {
   width: 100%;
-  border-top: 1px solid #333; /* 맨 위 굵은 선 */
+  border-top: 1px solid #333;
   border-collapse: collapse;
 }
 
@@ -214,10 +159,10 @@ const notices = ref([
 
 .board-table td {
   padding: 20px 0;
-  border-bottom: 1px dotted #ccc; /* 이미지처럼 점선 적용 */
+  border-bottom: 1px dotted #ccc;
   color: #666;
   font-size: 15px;
-  text-align: center; /* 기본은 가운데 정렬 */
+  text-align: center;
 }
 
 /* 각 열의 너비 지정 */
@@ -238,7 +183,7 @@ const notices = ref([
 
 /* 공지 태그 및 링크 */
 .text-notice {
-  color: #e74c3c; /* 빨간색 공지 */
+  color: #e74c3c;
   font-weight: bold;
 }
 
@@ -279,7 +224,7 @@ const notices = ref([
   position: relative;
   margin-top: 40px;
   display: flex;
-  justify-content: center; /* 검색창 가운데 정렬 */
+  justify-content: center;
   align-items: center;
 }
 

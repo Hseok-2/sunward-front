@@ -19,13 +19,13 @@ import AppFooter from './components/AppFooter.vue'
 /* 헤더 높이만큼 윗여백 생성 */
 /* PC */
 .main-content {
-  padding-top: 80px;
+  padding-top: 0;
 }
 
 /* 모바일 */
 @media (max-width: 768px) {
   .main-content {
-    padding-top: 60px;
+    padding-top: 0;
   }
 }
 </style>
