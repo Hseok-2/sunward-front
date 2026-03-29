@@ -61,14 +61,67 @@
         </ul>
       </nav>
 
-      <button class="mobile-menu-btn" @click="toggleMobileMenu">
+      <button
+        class="mobile-menu-btn"
+        :class="{ 'is-active': isMobileMenuOpen }"
+        @click="toggleMobileMenu"
+      >
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
       </button>
     </div>
 
-    <div v-if="isMobileMenuOpen" class="mobile-menu-overlay"></div>
+    <Transition name="slide-down">
+      <div v-show="isMobileMenuOpen" class="mobile-dropdown-menu">
+        <ul class="mobile-nav-list">
+          <li class="mobile-nav-item">
+            <div class="mobile-nav-title">회사 소개</div>
+            <ul class="mobile-sub-list">
+              <li v-for="category in aboutCategories" :key="category.slug">
+                <RouterLink
+                  :to="`/about/${category.slug}`"
+                  class="mobile-sub-link"
+                  @click="toggleMobileMenu"
+                >
+                  - {{ category.name }}
+                </RouterLink>
+              </li>
+            </ul>
+          </li>
+
+          <li class="mobile-nav-item">
+            <div class="mobile-nav-title">제품 소개</div>
+            <ul class="mobile-sub-list">
+              <li v-for="category in productCategories" :key="category.slug">
+                <RouterLink
+                  :to="`/product-list/${category.slug}`"
+                  class="mobile-sub-link"
+                  @click="toggleMobileMenu"
+                >
+                  - {{ category.name }}
+                </RouterLink>
+              </li>
+            </ul>
+          </li>
+
+          <li class="mobile-nav-item">
+            <RouterLink to="/inquiry" class="mobile-nav-title" @click="toggleMobileMenu"
+              >견적 문의</RouterLink
+            >
+          </li>
+          <li class="mobile-nav-item">
+            <RouterLink to="/support" class="mobile-nav-title" @click="toggleMobileMenu"
+              >고객 지원</RouterLink
+            >
+          </li>
+        </ul>
+      </div>
+    </Transition>
+
+    <Transition name="fade">
+      <div v-if="isMobileMenuOpen" class="mobile-menu-overlay" @click="toggleMobileMenu"></div>
+    </Transition>
   </header>
 </template>
 
@@ -76,23 +129,20 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
-// 드롭다운 상태 관리를 메뉴별로 분리 및 모바일 메뉴 토글 상태
 const isAboutDropdownOpen = ref(false)
 const isProductDropdownOpen = ref(false)
-
 const isMobileMenuOpen = ref(false)
+
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
-// 회사 소개 하위 메뉴 데이터 추가
 const aboutCategories = ref([
   { name: '회사 개요', slug: 'overview' },
   { name: 'CEO 인사말', slug: 'ceo' },
   { name: '연혁', slug: 'history' },
 ])
 
-// 🚩 요구사항 반영: 5개 카테고리 체계 적용 (추후 API/Pinia 스토어 연동)
 const productCategories = ref([
   { categoryId: 1, name: '바닥재(타일)', slug: 'flooring-tile' },
   { categoryId: 2, name: '바닥재(시트)', slug: 'flooring-sheet' },
@@ -103,7 +153,7 @@ const productCategories = ref([
 </script>
 
 <style scoped>
-/* 헤더 전체 레이아웃 */
+/* --- PC 공통 헤더 스타일 --- */
 .app-header {
   width: 100%;
   height: 80px;
@@ -122,9 +172,11 @@ const productCategories = ref([
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative;
+  z-index: 1002; /* 드롭다운보다 위에 위치 */
+  background-color: #fff;
 }
 
-/* 로고 영역 */
 .logo-link {
   text-decoration: none;
 }
@@ -136,14 +188,12 @@ const productCategories = ref([
   letter-spacing: 1px;
 }
 
-/* 나중에 이미지 로고 주석을 풀었을 때 사용될 CSS 클래스를 미리 적어둠 */
 .header-logo {
-  height: 40px; /* 헤더 높이(80px)를 고려하여 적절히 조절하세요 */
+  height: 40px;
   object-fit: contain;
   display: block;
 }
 
-/* 메인 네비게이션 */
 .nav-list {
   display: flex;
   align-items: center;
@@ -175,7 +225,7 @@ const productCategories = ref([
   color: #38b2ac;
 }
 
-/* 드롭다운 하위 메뉴 */
+/* PC 드롭다운 하위 메뉴 */
 .dropdown-menu {
   position: absolute;
   top: 80px;
@@ -210,7 +260,6 @@ const productCategories = ref([
   font-weight: 700;
 }
 
-/* 드롭다운 트랜지션 효과 */
 .fade-enter-active,
 .fade-leave-active {
   transition:
@@ -223,26 +272,120 @@ const productCategories = ref([
   transform: translate(-50%, -10px);
 }
 
-/* 모바일 햄버거 버튼 (PC에서는 숨김) */
+/* --- 모바일 햄버거 버튼 스타일 --- */
 .mobile-menu-btn {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
   flex-direction: column;
-  gap: 5px;
-  padding: 10px;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  padding: 0;
+  z-index: 1003;
 }
 
 .mobile-menu-btn .bar {
-  width: 24px;
-  height: 2px;
+  display: block;
+  width: 100%;
+  height: 3px;
   background-color: #111;
-  transition: 0.3s;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: left center;
 }
 
-/* 태블릿/모바일 반응형 */
-@media (max-width: 768px) {
+/* 햄버거 버튼 클릭 시 X 애니메이션 */
+.mobile-menu-btn.is-active .bar:nth-child(1) {
+  transform: rotate(45deg);
+}
+.mobile-menu-btn.is-active .bar:nth-child(2) {
+  opacity: 0;
+}
+.mobile-menu-btn.is-active .bar:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* --- 모바일 토글 다운 메뉴 스타일 --- */
+.mobile-dropdown-menu {
+  position: absolute;
+  top: 80px; /* 헤더 바로 아래 */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #f0f0f0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  z-index: 1001;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.mobile-nav-title {
+  display: block;
+  padding: 18px 25px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+}
+
+.mobile-sub-list {
+  list-style: none;
+  padding: 10px 0 20px 0;
+  margin: 0;
+  background-color: #fdfdfd;
+}
+
+.mobile-sub-link {
+  display: block;
+  padding: 10px 25px 10px 35px;
+  font-size: 15px;
+  color: #666;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mobile-sub-link:hover {
+  color: #38b2ac;
+}
+
+/* 슬라이드 다운 애니메이션 */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-15px);
+}
+
+/* 메뉴 활성화 시 헤더 하단 배경 오버레이 */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+/* 태블릿/모바일 반응형 기준 */
+@media (max-width: 992px) {
   .gnb {
     display: none;
   }
