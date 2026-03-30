@@ -39,10 +39,7 @@
             </div>
 
             <div class="overview-image">
-              <img
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop"
-                alt="회사 전경"
-              />
+              <img src="/public/images/aboutView.png" alt="회사 전경" />
             </div>
           </div>
         </div>
