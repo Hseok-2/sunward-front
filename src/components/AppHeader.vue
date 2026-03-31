@@ -3,7 +3,7 @@
     <div class="container header-inner">
       <div class="logo">
         <RouterLink to="/" class="logo-link">
-          <span class="logo-text">SUNWARD</span>
+          <img src="/images/sunward-logo.jpg" alt="SUNWARD" class="header-logo" />
         </RouterLink>
       </div>
 
@@ -179,19 +179,15 @@ const productCategories = ref([
 
 .logo-link {
   text-decoration: none;
-}
-
-.logo-text {
-  font-size: 26px;
-  font-weight: 900;
-  color: #111;
-  letter-spacing: 1px;
+  isplay: flex;
+  align-items: center;
 }
 
 .header-logo {
-  height: 40px;
+  height: 60px;
   object-fit: contain;
   display: block;
+  margin-top: -2px;
 }
 
 .nav-list {

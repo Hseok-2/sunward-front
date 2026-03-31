@@ -37,6 +37,17 @@ const router = createRouter({
       name: 'productList',
       component: () => import('../views/ProductListView.vue'),
     },
+    {
+      path: '/support', // 고객 지원 페이지 (목록)
+      name: 'support',
+      component: () => import('../views/SupportView.vue'),
+    },
+    // 공지사항 상세 페이지 라우트
+    {
+      path: '/support/:id',
+      name: 'supportDetail',
+      component: () => import('../views/SupportDetailView.vue'),
+    },
   ],
 
   // 페이지 이동시 스크롤을 맨 위로

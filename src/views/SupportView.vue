@@ -27,7 +27,9 @@
                 <span v-else>{{ item.id }}</span>
               </td>
               <td class="col-title">
-                <a href="#" class="board-link">{{ item.title }}</a>
+                <RouterLink :to="`/support/${item.id}`" class="board-link">{{
+                  item.title
+                }}</RouterLink>
               </td>
               <td class="col-date">{{ item.date }}</td>
               <td class="col-views">{{ item.views }}</td>
@@ -60,32 +62,11 @@
 
 <script setup>
 import { ref } from 'vue'
+// 기존 ref 대신 방금 만든 noticeData.js에서 전역 데이터를 불러옵니다.
+import { globalNotices } from '@/data/noticeData'
 
-// 가상의 공지사항 데이터 (나중에 백엔드 API 연결 시 axios 등으로 데이터 통신)
-const notices = ref([
-  {
-    id: '공지',
-    title: 'SUNWARD 홈페이지를 오픈하였습니다.',
-    date: '26-03-20',
-    views: 230,
-    isNotice: true,
-  },
-  { id: 3, title: 'SUNWARD 하계 휴무 일정 안내', date: '26-03-15', views: 214, isNotice: false },
-  {
-    id: 2,
-    title: '신제품 (프리미엄 데코타일) 출시 안내',
-    date: '26-03-10',
-    views: 209,
-    isNotice: false,
-  },
-  {
-    id: 1,
-    title: 'SUNWARD 고객지원 센터 운영시간 안내',
-    date: '26-03-01',
-    views: 206,
-    isNotice: false,
-  },
-])
+// 불러온 전역 데이터를 연결합니다.
+const notices = globalNotices
 </script>
 
 <style scoped>
