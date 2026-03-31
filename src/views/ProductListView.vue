@@ -94,7 +94,7 @@ const mockCategories = ref([
     categoryId: 1,
     name: '바닥재(타일)',
     slug: 'flooring-tile',
-    description: 'SUNWARD 타일은 우수한 내마모성과 다양한 디자인 패턴을 갖춘 바닥재입니다.',
+    description: '우수한 내마모성과 다양한 디자인 패턴을 갖춘 바닥재입니다.',
     coverImage: '/images/deco-tile.png', // 시안의 우측 이미지 역할
   },
   {
