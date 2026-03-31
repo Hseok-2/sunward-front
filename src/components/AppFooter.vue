@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <img src="/images/sunward-footer-logo.jpg" alt="주식회사 선워드" class="footer-logo-img" />
+      <img src="/images/sunward-footer-logo.png" alt="주식회사 선워드" class="footer-logo-img" />
       <!-- <span class="footer-logo">SUNWARD</span> -->
       <div class="footer-info">
         <p>대표자 : 윤혜진 | 사업자등록번호 : 402-88-01787</p>
@@ -18,13 +18,12 @@
 /* 푸터 */
 .footer {
   background: #222;
-  padding: 60px 0;
+  padding: 50px 0;
   color: #888;
   font-size: 14px;
 }
 .footer-logo-img {
-  height: 60px;
-  margin-bottom: 24px;
+  height: 120px;
   display: block;
   object-fit: contain;
 }

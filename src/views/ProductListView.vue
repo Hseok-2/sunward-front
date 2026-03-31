@@ -4,7 +4,6 @@
       <div class="container hero-container">
         <div class="hero-text">
           <h1 class="page-title">{{ currentCategory.name }}</h1>
-          <p class="category-subtitle">{{ currentCategory.subTitle }}</p>
           <p class="page-desc">{{ currentCategory.description }}</p>
         </div>
 
@@ -95,7 +94,6 @@ const mockCategories = ref([
     categoryId: 1,
     name: '바닥재(타일)',
     slug: 'flooring-tile',
-    subTitle: 'High-Performance Commercial Tile',
     description: 'SUNWARD 타일은 우수한 내마모성과 다양한 디자인 패턴을 갖춘 바닥재입니다.',
     coverImage: '/images/deco-tile.png', // 시안의 우측 이미지 역할
   },
@@ -103,7 +101,6 @@ const mockCategories = ref([
     categoryId: 2,
     name: '바닥재(시트)',
     slug: 'flooring-sheet',
-    subTitle: 'Durable & Easy-care Sheet',
     description: '시공이 편리하고 유지관리가 쉬운 롤시트 바닥재입니다.',
     coverImage: '/images/roll-sheet.png',
   },
@@ -111,7 +108,6 @@ const mockCategories = ref([
     categoryId: 3,
     name: '바닥재(마루)',
     slug: 'flooring-wood',
-    subTitle: 'Premium Wood Flooring',
     description: '자연스러운 질감과 따뜻한 감성을 담은 프리미엄 마루입니다.',
     coverImage: '/images/flooring.png',
   },
@@ -119,7 +115,6 @@ const mockCategories = ref([
     categoryId: 4,
     name: '벽지&벽장재',
     slug: 'wallpaper-wallpanel',
-    subTitle: 'Stylish Wall Coverings',
     description: '공간의 분위기를 완성하는 감각적인 벽지와 벽장재입니다.',
     coverImage: '/images/wallpaper.png',
   },
@@ -127,7 +122,6 @@ const mockCategories = ref([
     categoryId: 5,
     name: '단열재',
     slug: 'insulation',
-    subTitle: 'High-Efficiency Insulation',
     description: '우수한 단열 성능으로 에너지 효율을 높여주는 단열재입니다.',
     coverImage: '/images/wall-panel.png',
   },
