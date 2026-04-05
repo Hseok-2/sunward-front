@@ -4,9 +4,9 @@
       <img src="/images/sunward-footer-logo.png" alt="주식회사 선워드" class="footer-logo-img" />
       <!-- <span class="footer-logo">SUNWARD</span> -->
       <div class="footer-info">
-        <p>대표자 : 윤혜진 | 사업자등록번호 : 402-88-01787</p>
+        <p>대표자 : 윤혜진 | 사업자등록번호 : 127-81-43657</p>
         <p>
-          경기도 성남시 수정구 달래내로 388, 2층(창곡동) | 전화 : 031-759-4370 | 팩스 : 031-759-4384
+          경기도 성남시 수정구 달래내로 388, 2층(상적동) | 전화 : 031-759-0048 | 팩스 : 031-796-4431
         </p>
       </div>
       <p class="copyright">© 2026 SUNWARD. All Rights Reserved.</p>
@@ -48,7 +48,8 @@
 
   .footer-logo-img {
     margin: 0 auto 15px auto;
-    height: 30px; /* 모바일에서는 로고 크기를 살짝 줄임 */
+    height: 80px; /* 모바일에서는 로고 크기를 살짝 줄임 */
+    width: auto;
   }
 
   .footer-info p {

@@ -14,23 +14,20 @@
         <div class="board-detail">
           <div class="detail-header">
             <h3 class="detail-title">
-              <span v-if="notice.isNotice" class="text-notice">[공지]</span>
+              <span v-if="notice.pinned" class="text-notice">[공지]</span>
               {{ notice.title }}
             </h3>
             <div class="detail-info">
-              <span class="info-item"><strong>작성일:</strong> {{ notice.date }}</span>
-              <span class="info-item"><strong>조회수:</strong> {{ notice.views }}</span>
+              <span class="info-item"
+                ><strong>작성일:</strong> {{ formatDate(notice.createdAt) }}</span
+              >
+              <span class="info-item"><strong>조회수:</strong> {{ notice.viewCount }}</span>
             </div>
           </div>
 
           <div class="detail-body">
-            <p v-if="notice.content">{{ notice.content }}</p>
-            <p v-else>
-              안녕하세요. 병원 자재 전문 회사 SUNWARD입니다.<br /><br />
-              홈페이지 오픈을 맞이하여 새로운 소식을 전해드립니다. <br />
-              앞으로 다양한 제품 정보와 유익한 자료로 찾아뵙겠습니다.<br /><br />
-              감사합니다.
-            </p>
+            <p v-if="notice.content" class="content-text">{{ notice.content }}</p>
+            <p v-else class="content-text">내용을 불러오는 중이거나 내용이 없습니다.</p>
           </div>
 
           <div class="detail-footer">
@@ -44,37 +41,47 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-// 공통 데이터와 조회수 증가 함수를 불러옵니다.
-import { globalNotices, increaseViewCount } from '@/data/noticeData'
+import { useRoute, useRouter } from 'vue-router'
+import api from '@/api/index' // 🟡 [추가] 백엔드 통신을 위한 axios 인스턴스
 
 const route = useRoute()
+const router = useRouter()
 
-// 화면에 보여줄 임시 데이터 그릇
+// 🟡 백엔드 응답 DTO 구조에 맞춰 초기값 세팅
 const notice = ref({
   title: '로딩 중...',
-  date: '',
-  views: 0,
-  isNotice: false,
+  createdAt: '',
+  viewCount: 0,
+  pinned: false,
   content: '',
 })
 
-onMounted(() => {
-  // URL에서 전달받은 ID 값 (예: /support/1 이면 '1')
-  const id = route.params.id
-
-  // 1. 전역 데이터에서 해당 ID를 가진 게시글 찾기 (문자/숫자 타입 차이 방지를 위해 String 변환 후 비교)
-  const foundNotice = globalNotices.value.find((n) => String(n.id) === String(id))
-
-  if (foundNotice) {
-    // 2. 글을 찾았다면 조회수 1 증가 (로컬 스토리지에 자동 저장됨)
-    increaseViewCount(foundNotice.id)
-
-    // 3. 화면에 보여줄 데이터로 세팅 (조회수가 즉시 반영됨)
-    notice.value = foundNotice
-  } else {
-    notice.value.title = '존재하지 않는 게시글입니다.'
+// 🟡 백엔드 API에서 상세 데이터 가져오기
+const fetchNoticeDetail = async (id) => {
+  try {
+    const response = await api.get(`/api/notices/${id}`)
+    notice.value = response.data
+  } catch (error) {
+    console.error('상세 데이터 로드 실패:', error)
+    alert('존재하지 않거나 삭제된 게시글입니다.')
+    router.push('/support') // 에러 시 목록으로 강제 이동
   }
+}
+
+// 🟡 백엔드 날짜 형식을 기존 디자인(YY-MM-DD)에 맞게 변환하는 함수 (SupportView와 동일)
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  const yy = String(date.getFullYear()).slice(2)
+  const mm = String(date.getMonth() + 1).padStart(2, '0')
+  const dd = String(date.getDate()).padStart(2, '0')
+  return `${yy}-${mm}-${dd}`
+}
+
+onMounted(() => {
+  // URL에서 전달받은 ID 값 추출 후 API 호출
+  const id = route.params.id
+  fetchNoticeDetail(id)
 })
 </script>
 
@@ -159,10 +166,15 @@ onMounted(() => {
 .detail-body {
   padding: 50px 20px;
   min-height: 300px;
+  border-bottom: 1px solid #333;
+}
+
+/* 🟡 [추가] 백엔드에서 입력된 엔터(줄바꿈)가 무시되지 않도록 설정 */
+.content-text {
   font-size: 16px;
   line-height: 1.8;
   color: #444;
-  border-bottom: 1px solid #333;
+  white-space: pre-wrap;
 }
 
 .detail-footer {
@@ -184,5 +196,57 @@ onMounted(() => {
 
 .btn-list:hover {
   opacity: 0.8;
+}
+
+/* =========================================
+   📱 모바일 반응형 설정 (화면 너비 768px 이하)
+   ========================================= */
+@media (max-width: 768px) {
+  /* 히어로 배너 축소 */
+  .hero-title {
+    font-size: 32px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .content-section {
+    padding-top: 40px;
+  }
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  /* 헤더 영역 패딩 및 폰트 크기 조절 */
+  .detail-header {
+    padding: 20px 15px;
+  }
+  .detail-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .detail-info {
+    font-size: 13px;
+    gap: 15px; /* 모바일에서는 간격을 조금 줄임 */
+  }
+
+  /* 본문 영역 패딩 조절 */
+  .detail-body {
+    padding: 30px 15px;
+    min-height: 200px;
+  }
+  .content-text {
+    font-size: 15px; /* 모바일에서 글씨가 너무 크지 않게 살짝 축소 */
+  }
+
+  /* 목록 버튼 꽉 차게 */
+  .btn-list {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+  }
 }
 </style>

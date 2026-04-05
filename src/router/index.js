@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+// 관리자 레이아웃 및 대시보드 컴포넌트
+import AdminLayout from '../components/admin/AdminLayout.vue'
+import DashboardView from '../views/admin/DashboardView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -47,6 +51,52 @@ const router = createRouter({
       path: '/support/:id',
       name: 'supportDetail',
       component: () => import('../views/SupportDetailView.vue'),
+    },
+    {
+      path: '/admin/login',
+      name: 'adminLogin',
+      component: () => import('../views/LoginView.vue'),
+    },
+    // 관리자 영역 레이아웃 및 자식 라우트 설정
+    {
+      path: '/admin',
+      component: AdminLayout, // 모든 /admin 하위 페이지는 이 레이아웃을 통과함
+      redirect: '/admin/dashboard', // /admin 접속 시 대시보드로 자동 이동
+      children: [
+        {
+          path: 'dashboard', // 실제 경로는 /admin/dashboard
+          name: 'adminDashboard',
+          component: DashboardView,
+        },
+        {
+          path: 'notice',
+          name: 'AdminNotice',
+          component: () => import('@/views/admin/NoticeView.vue'),
+        },
+        {
+          path: 'notice/write', // 기존의 '/admin/notice/write'를 자식으로 이동
+          name: 'noticeWrite',
+          component: () => import('../views/admin/NoticeWriteView.vue'),
+        },
+        {
+          path: 'notice/edit/:id',
+          name: 'adminNoticeEdit',
+          component: () => import('../views/admin/NoticeEditView.vue'),
+        },
+        // 🟢 [추가] 앞으로 만들 카테고리와 제품 관리 페이지 라우트 (임시 연결)
+        {
+          path: 'category',
+          name: 'adminCategory',
+          // 나중에 CategoryView.vue를 만들고 주석을 해제하거나 껍데기 파일을 연결하세요
+          component: () => import('../views/admin/CategoryView.vue'),
+        },
+        {
+          path: 'product',
+          name: 'adminProduct',
+          // 나중에 ProductView.vue를 만들고 연결하세요
+          // component: () => import('../views/admin/ProductView.vue'),
+        },
+      ],
     },
   ],
 

@@ -81,21 +81,39 @@
               <li>
                 <div class="year">2026</div>
                 <div class="history-details">
-                  <p><strong>03</strong> SUNWARD 공식 홈페이지 리뉴얼 오픈</p>
-                  <p><strong>01</strong> 프리미엄 데코타일 라인업 확대</p>
+                  <p>SUNWARD 공식 홈페이지 리뉴얼 오픈</p>
+                  <p>LX하우시스 병원전문자재 대리점 개설</p>
                 </div>
               </li>
               <li>
-                <div class="year">2024</div>
+                <div class="year">2020</div>
                 <div class="history-details">
-                  <p><strong>11</strong> ISO 9001 품질경영시스템 인증 획득</p>
-                  <p><strong>05</strong> 전국 주요 도시 물류 네트워크 구축</p>
+                  <p>LX하우시스 장식재사업부 벽장재 대리점 개설</p>
                 </div>
               </li>
               <li>
-                <div class="year">2021</div>
+                <div class="year">2011</div>
                 <div class="history-details">
-                  <p><strong>08</strong> 주식회사 보스파트너스(SUNWARD) 법인 설립</p>
+                  <p>LG하우시스 장식재사업부 단열재 대리점 개설</p>
+                </div>
+              </li>
+              <li>
+                <div class="year">2010</div>
+                <div class="history-details">
+                  <p>LG하우시스 장식재사업부 벽지 대리점 개설</p>
+                  <p>LG하우시스 장식재사업부 바닥재 대리점 개설</p>
+                </div>
+              </li>
+              <li>
+                <div class="year">2002</div>
+                <div class="history-details">
+                  <p>LG화학 고기능사업부 베니프 대리점 개설</p>
+                </div>
+              </li>
+              <li>
+                <div class="year">2001</div>
+                <div class="history-details">
+                  <p>(주)선워드 법인 설립</p>
                 </div>
               </li>
             </ul>

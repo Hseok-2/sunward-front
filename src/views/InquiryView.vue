@@ -85,7 +85,7 @@
                     type="text"
                     v-model="form.captchaInput"
                     class="input-text w-200"
-                    placeholder="왼쪽의 글자를 입력하세요."
+                    placeholder="글자를 입력하세요."
                     required
                   />
                   <button type="button" class="btn-refresh" @click="refreshCaptcha">
@@ -397,5 +397,87 @@ const submitInquiry = () => {
 
 .btn-submit:hover {
   opacity: 0.8;
+}
+/* =========================================
+   📱 모바일 반응형 설정 (PC 좌우 배치 구조 유지 버전)
+   ========================================= */
+@media (max-width: 768px) {
+  .form-section {
+    padding: 40px 0 60px;
+  }
+
+  /* 1. 세로로 꺾지 않고 가로 배치(row) 강제 유지 */
+  .form-row {
+    flex-direction: row;
+  }
+
+  /* 2. 좁은 화면을 위해 왼쪽 라벨(이름, 연락처 등) 너비와 여백을 대폭 축소 */
+  .form-label {
+    width: 85px; /* 기존 180px에서 모바일에 맞게 축소 */
+    padding: 15px 10px;
+    font-size: 13px; /* 글자 크기 축소 */
+  }
+
+  /* 3. 오른쪽 입력 영역 여백 축소 */
+  .form-field {
+    padding: 15px 10px;
+  }
+
+  /* 4. 고정 너비(px) 클래스들을 유연하게 100%로 변경 */
+  .w-100,
+  .w-150,
+  .w-200,
+  .w-full-max {
+    width: 100%;
+  }
+
+  /* 5. 연락처 및 이메일 영역 가로 배치(nowrap) 강제 유지 */
+  .phone-field,
+  .email-field {
+    flex-wrap: nowrap; /* 절대 밑으로 떨어지지 않게 고정 */
+    gap: 3px; /* 입력창 사이 간격 최소화 */
+  }
+
+  .phone-field .input-select,
+  .phone-field .input-text,
+  .email-field .input-select,
+  .email-field .input-text {
+    padding: 8px 5px;
+    font-size: 12px; /* 좁은 공간에 글자가 다 들어가도록 폰트 크기 축소 */
+    flex: 1; /* 남은 공간을 균등하게 나눠 가짐 */
+  }
+
+  /* 6. 하이픈(-)과 골뱅이(@) 기호 간격 축소 */
+  .dash,
+  .at {
+    margin: 0 2px;
+    font-size: 13px;
+  }
+
+  /* 7. 자동방지문자 영역 (이미지 아래에 가로로 입력창+버튼 배치) */
+  .captcha-field {
+    align-items: stretch;
+  }
+  .captcha-input-wrap {
+    display: flex;
+    flex-direction: row; /* 입력창과 버튼 가로 유지 */
+    gap: 5px;
+    width: 100%;
+  }
+  .captcha-input-wrap .input-text {
+    flex: 1;
+    width: auto;
+  }
+  .btn-refresh {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap; /* 버튼 글씨 안 깨지게 고정 */
+  }
+
+  /* 8. 제출 버튼 꽉 차게 */
+  .btn-submit {
+    width: 100%;
+    padding: 15px 0;
+  }
 }
 </style>
